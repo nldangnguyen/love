@@ -18,14 +18,14 @@
             overflow-x: hidden;
             position: relative;
             background: 
-                /* Nền chính - Cây thông Noel */
-                url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=2074&q=80') center/cover no-repeat fixed,
-                /* Overlay đỏ xanh Giáng Sinh */
-                linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(0, 100, 0, 0.4) 100%);
-            background-blend-mode: overlay;
+                /* Nền chính - Ông già Noel trên xe tuần lộc */
+                url('https://images.unsplash.com/photo-1575425186775-b8de9a427e67?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat fixed,
+                /* Overlay đỏ ấm áp */
+                linear-gradient(135deg, rgba(220, 53, 69, 0.85) 0%, rgba(198, 40, 40, 0.9) 100%);
+            background-blend-mode: multiply;
         }
 
-        /* Overlay hoa tuyết */
+        /* Overlay hoa tuyết đỏ trắng */
         .snowflake-overlay {
             position: fixed;
             top: 0;
@@ -33,10 +33,10 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 20%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 20%),
-                radial-gradient(circle at 40% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 20%),
-                url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M100 0L132.3 50L200 50L150 100L200 150L132.3 150L100 200L67.7 150L0 150L50 100L0 50L67.7 50L100 0Z'/%3E%3C/g%3E%3C/svg%3E");
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 25%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 25%),
+                radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.25) 0%, transparent 20%),
+                url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.3' fill-rule='evenodd'%3E%3Cpath d='M100 0L132.3 50L200 50L150 100L200 150L132.3 150L100 200L67.7 150L0 150L50 100L0 50L67.7 50L100 0Z'/%3E%3C/g%3E%3C/svg%3E");
             background-size: auto, auto, auto, 200px 200px;
             pointer-events: none;
             z-index: 0;
@@ -86,7 +86,7 @@
             }
         }
 
-        /* Đèn trang trí Giáng Sinh */
+        /* Đèn trang trí Giáng Sinh đỏ trắng */
         .christmas-lights {
             position: fixed;
             width: 100%;
@@ -95,60 +95,18 @@
             z-index: 1;
             pointer-events: none;
             background: linear-gradient(90deg, 
-                #ff0000, #00ff00, #ffff00, #1e90ff, #ff69b4,
-                #ff0000, #00ff00, #ffff00, #1e90ff, #ff69b4);
+                #ffffff, #ff0000, #ffffff, #ff0000, #ffffff,
+                #ff0000, #ffffff, #ff0000, #ffffff, #ff0000);
             background-size: 200% 100%;
             animation: lightMove 10s linear infinite;
-            opacity: 0.7;
-            filter: blur(2px);
+            opacity: 0.8;
+            filter: blur(1px);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
         @keyframes lightMove {
             0% { background-position: 0% 0; }
             100% { background-position: 200% 0; }
-        }
-
-        /* Cây thông mini decor */
-        .mini-trees {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            height: 100px;
-            z-index: 1;
-            pointer-events: none;
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-        }
-
-        .mini-tree {
-            width: 30px;
-            height: 40px;
-            position: relative;
-            opacity: 0.6;
-        }
-
-        .mini-tree::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 40px solid #0a5c36;
-            bottom: 0;
-        }
-
-        .mini-tree::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 20px;
-            background: #8b4513;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         /* Container chính */
@@ -160,65 +118,65 @@
             z-index: 2;
         }
 
-        /* Header với theme Giáng Sinh */
+        /* Header với theme đỏ trắng Noel */
         .header {
             text-align: center;
             padding: 50px 30px;
             background: linear-gradient(135deg, 
-                rgba(139, 0, 0, 0.6) 0%, 
-                rgba(0, 100, 0, 0.6) 100%);
+                rgba(220, 53, 69, 0.7) 0%, 
+                rgba(255, 255, 255, 0.3) 100%);
             border-radius: 25px;
             margin-bottom: 50px;
-            border: 4px solid #ffd700;
+            border: 4px solid #ffffff;
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.6),
-                0 0 60px rgba(255, 215, 0, 0.5),
-                inset 0 0 50px rgba(255, 255, 255, 0.2);
+                0 0 60px rgba(255, 255, 255, 0.5),
+                inset 0 0 50px rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(15px);
             position: relative;
             overflow: hidden;
         }
 
         .header::before {
-            content: '🎄🎅🎁';
+            content: '';
             position: absolute;
             top: 20px;
             left: 20px;
-            font-size: 2rem;
-            opacity: 0.3;
+            font-size: 2.5rem;
+            opacity: 0.4;
         }
 
         .header::after {
-            content: '✨❄️⭐';
+            content: '';
             position: absolute;
             bottom: 20px;
             right: 20px;
-            font-size: 2rem;
-            opacity: 0.3;
+            font-size: 2.5rem;
+            opacity: 0.4;
         }
 
         .title {
             font-family: 'Mountains of Christmas', cursive;
             font-size: 4.5rem;
-            color: #ffd700;
+            color: #ffffff;
             margin-bottom: 20px;
             text-shadow: 
-                4px 4px 0 #8b0000,
-                0 0 40px rgba(255, 215, 0, 1),
-                0 0 80px rgba(255, 215, 0, 0.7);
+                4px 4px 0 #dc3545,
+                0 0 40px rgba(255, 255, 255, 1),
+                0 0 80px rgba(255, 255, 255, 0.7);
             position: relative;
             z-index: 2;
-            background: linear-gradient(45deg, #ffd700, #ff6b00, #ffd700);
+            background: linear-gradient(45deg, #ffffff, #ffcccc, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .love-name { 
-            color: #ff1493; 
+            color: #ffccd5; 
             text-shadow: 
-                3px 3px 0 #8b0000,
-                0 0 30px rgba(255, 20, 147, 1);
+                3px 3px 0 #dc3545,
+                0 0 30px rgba(255, 204, 213, 1);
             animation: pulse 2s infinite;
         }
 
@@ -230,7 +188,7 @@
         .decoration {
             margin-top: 25px;
             font-size: 2.5rem;
-            color: #ff1493;
+            color: #ffffff;
             position: relative;
             z-index: 2;
             display: flex;
@@ -241,35 +199,35 @@
 
         .decoration i {
             animation: float 3s ease-in-out infinite;
-            text-shadow: 0 0 25px currentColor;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.9);
         }
 
-        .decoration i:nth-child(1) { animation-delay: 0s; color: #ff0000; }
-        .decoration i:nth-child(2) { animation-delay: 0.5s; color: #00ff00; }
-        .decoration i:nth-child(3) { animation-delay: 1s; color: #ffd700; }
-        .decoration i:nth-child(4) { animation-delay: 1.5s; color: #1e90ff; }
-        .decoration i:nth-child(5) { animation-delay: 2s; color: #ff1493; }
+        .decoration i:nth-child(1) { animation-delay: 0s; color: #ffffff; }
+        .decoration i:nth-child(2) { animation-delay: 0.5s; color: #ffcccc; }
+        .decoration i:nth-child(3) { animation-delay: 1s; color: #ff6666; }
+        .decoration i:nth-child(4) { animation-delay: 1.5s; color: #ffffff; }
+        .decoration i:nth-child(5) { animation-delay: 2s; color: #ffcccc; }
 
-        /* Gallery với theme Noel */
+        /* Gallery với 2 hàng, mỗi hàng 2 ảnh */
         .gallery {
             margin: 50px 0;
             padding: 40px;
-            background: rgba(0, 100, 0, 0.3);
+            background: rgba(220, 53, 69, 0.3);
             border-radius: 25px;
-            border: 3px solid rgba(255, 215, 0, 0.6);
+            border: 3px solid rgba(255, 255, 255, 0.6);
             box-shadow: 
                 0 15px 35px rgba(0, 0, 0, 0.4),
-                inset 0 0 30px rgba(255, 215, 0, 0.2);
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             position: relative;
         }
 
         .gallery::before {
-            content: '📷🎄';
+            content: '📷🎅';
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             opacity: 0.4;
         }
 
@@ -277,22 +235,24 @@
             text-align: center;
             font-family: 'Mountains of Christmas', cursive;
             font-size: 3.5rem;
-            color: #ffd700;
+            color: #ffffff;
             margin-bottom: 40px;
-            text-shadow: 3px 3px 0 #8b0000;
+            text-shadow: 3px 3px 0 #dc3545;
         }
 
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(2, 1fr); /* 2 cột */
+            gap: 30px; /* Khoảng cách giữa các ảnh */
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .photo-item {
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            height: 280px;
+            height: 350px; /* Tăng chiều cao ảnh */
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
@@ -301,10 +261,10 @@
 
         .photo-item:hover {
             transform: translateY(-15px) scale(1.05);
-            border-color: #ffd700;
+            border-color: #ffffff;
             box-shadow: 
                 0 25px 50px rgba(0, 0, 0, 0.6),
-                0 0 40px rgba(255, 215, 0, 0.6);
+                0 0 40px rgba(255, 255, 255, 0.6);
         }
 
         .photo-item img {
@@ -323,11 +283,18 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(139, 0, 0, 0.9), transparent);
+            background: linear-gradient(to top, rgba(220, 53, 69, 0.9), transparent);
             padding: 20px;
             color: white;
             font-size: 1.1rem;
             font-family: 'Poppins', sans-serif;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #ffffff;
+            font-size: 1.8rem;
         }
 
         /* Message section */
@@ -339,16 +306,16 @@
             text-align: center;
             font-family: 'Mountains of Christmas', cursive;
             font-size: 3.5rem;
-            color: #ffd700;
+            color: #ffffff;
             margin-bottom: 40px;
-            text-shadow: 3px 3px 0 #8b0000;
+            text-shadow: 3px 3px 0 #dc3545;
         }
 
         .message-box {
-            background: rgba(139, 0, 0, 0.3);
+            background: rgba(220, 53, 69, 0.4);
             border-radius: 25px;
             padding: 50px;
-            border: 3px solid #ffd700;
+            border: 3px solid #ffffff;
             max-width: 850px;
             margin: 0 auto;
             position: relative;
@@ -361,16 +328,16 @@
             position: absolute;
             top: 15px;
             left: 20px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             opacity: 0.4;
         }
 
         .message-box::after {
-            content: '🎅🎄';
+            content: '';
             position: absolute;
             bottom: 15px;
             right: 20px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             opacity: 0.4;
         }
 
@@ -392,9 +359,9 @@
         .signature-name {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
-            color: #ff1493;
+            color: #ffccd5;
             font-weight: bold;
-            text-shadow: 2px 2px 0 #8b0000;
+            text-shadow: 2px 2px 0 #dc3545;
         }
 
         /* Countdown section */
@@ -402,9 +369,9 @@
             margin: 70px 0;
             text-align: center;
             padding: 40px;
-            background: linear-gradient(135deg, rgba(139, 0, 0, 0.5), rgba(0, 100, 0, 0.5));
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.5), rgba(255, 255, 255, 0.3));
             border-radius: 25px;
-            border: 3px solid #ffd700;
+            border: 3px solid #ffffff;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             position: relative;
@@ -415,16 +382,16 @@
             position: absolute;
             top: 15px;
             left: 20px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             opacity: 0.4;
         }
 
         .countdown h2 {
             font-family: 'Mountains of Christmas', cursive;
             font-size: 3.5rem;
-            color: #ffd700;
+            color: #ffffff;
             margin-bottom: 40px;
-            text-shadow: 3px 3px 0 #8b0000;
+            text-shadow: 3px 3px 0 #dc3545;
         }
 
         .countdown-timer {
@@ -435,27 +402,27 @@
         }
 
         .time-unit {
-            background: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
             padding: 30px 25px;
             border-radius: 15px;
             min-width: 150px;
-            border: 2px solid #ffd700;
+            border: 2px solid #ffffff;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .time-unit:hover {
             transform: translateY(-8px);
-            background: rgba(255, 215, 0, 0.4);
+            background: rgba(255, 255, 255, 0.4);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
 
         .time-unit span {
             font-size: 4rem;
             font-weight: bold;
-            color: #ffd700;
+            color: #ffffff;
             display: block;
-            text-shadow: 3px 3px 0 #8b0000;
+            text-shadow: 3px 3px 0 #dc3545;
         }
 
         .time-unit p {
@@ -469,8 +436,8 @@
             text-align: center;
             padding: 50px 20px;
             margin-top: 60px;
-            border-top: 3px solid #ffd700;
-            background: rgba(139, 0, 0, 0.3);
+            border-top: 3px solid #ffffff;
+            background: rgba(220, 53, 69, 0.3);
             border-radius: 25px;
             backdrop-filter: blur(10px);
             box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
@@ -483,12 +450,12 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             opacity: 0.4;
         }
 
         .heartbeat {
-            color: #ff1493;
+            color: #ffccd5;
             animation: heartbeat 1.5s infinite;
             margin: 0 10px;
         }
@@ -499,15 +466,28 @@
             50% { transform: translateY(-20px); }
         }
 
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .title { font-size: 3.5rem; }
-            .photo-grid { grid-template-columns: repeat(2, 1fr); }
+            .photo-grid { 
+                grid-template-columns: repeat(2, 1fr); /* Giữ 2 cột trên tablet */
+                gap: 20px;
+            }
+            .photo-item { height: 300px; }
         }
 
         @media (max-width: 768px) {
             .title { font-size: 2.8rem; }
-            .photo-grid { grid-template-columns: 1fr; }
+            .photo-grid { 
+                grid-template-columns: 1fr; /* Chuyển thành 1 cột trên mobile */
+                max-width: 500px;
+            }
+            .photo-item { height: 350px; }
             .countdown-timer { gap: 20px; }
             .time-unit {
                 min-width: 120px;
@@ -521,12 +501,39 @@
 
         @media (max-width: 480px) {
             .title { font-size: 2.2rem; }
+            .photo-item { height: 280px; }
             .time-unit {
                 min-width: 100px;
                 padding: 20px 15px;
             }
             .time-unit span { font-size: 2.8rem; }
             .decoration { font-size: 1.5rem; gap: 15px; }
+        }
+
+        /* Thêm ảnh ông già Noel di chuyển */
+        .santa-animation {
+            position: fixed;
+            bottom: 20px;
+            right: -200px;
+            width: 150px;
+            height: 150px;
+            z-index: 1;
+            pointer-events: none;
+            animation: santaSlide 30s linear infinite;
+        }
+
+        @keyframes santaSlide {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-100vw) translateY(-50px); }
+            50% { transform: translateX(-200vw) translateY(0); }
+            75% { transform: translateX(-300vw) translateY(-50px); }
+            100% { transform: translateX(-400vw) translateY(0); }
+        }
+
+        .santa-animation::before {
+            content: '🎅';
+            font-size: 4rem;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
         }
     </style>
 </head>
@@ -540,8 +547,8 @@
     <!-- Đèn Giáng Sinh -->
     <div class="christmas-lights"></div>
     
-    <!-- Cây thông mini -->
-    <div class="mini-trees" id="miniTrees"></div>
+    <!-- Ông già Noel di chuyển -->
+    <div class="santa-animation"></div>
     
     <!-- Container chính -->
     <div class="container">
@@ -563,7 +570,10 @@
                 <i class="fas fa-spinner fa-spin"></i> Đang tải ảnh...
             </div>
             
-            <div class="photo-grid" id="photoGrid"></div>
+            <!-- Thay đổi: Grid 2 cột cho 4 ảnh -->
+            <div class="photo-grid" id="photoGrid">
+                <!-- Ảnh sẽ được tải bằng JavaScript -->
+            </div>
         </section>
 
         <section class="message">
@@ -604,7 +614,7 @@
 
         <footer class="footer">
             <p>Made with <i class="fas fa-heart heartbeat"></i> by "Anh iu"</p>
-            <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem;"></p>
+            <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem;">🎅 Merry Christmas & Happy New Year! 🎄</p>
         </footer>
     </div>
 
@@ -639,19 +649,6 @@
             }
         }
 
-        // Tạo cây thông mini
-        function createMiniTrees() {
-            const treesContainer = document.getElementById('miniTrees');
-            const treeCount = 8;
-            
-            for (let i = 0; i < treeCount; i++) {
-                const tree = document.createElement('div');
-                tree.classList.add('mini-tree');
-                
-                treesContainer.appendChild(tree);
-            }
-        }
-
         // Danh sách ảnh
         const myImages = [
             {
@@ -676,7 +673,7 @@
             }
         ];
 
-        // Tải ảnh
+        // Tải ảnh - LAYOUT 2 HÀNG, MỖI HÀNG 2 ẢNH
         function loadImages() {
             const photoGrid = document.getElementById('photoGrid');
             const loading = document.getElementById('loading');
@@ -723,7 +720,7 @@
             modal.innerHTML = `
                 <div style="max-width: 90%; max-height: 90%; position: relative;">
                     <img src="${imgUrl}" alt="${caption}" 
-                         style="max-width: 100%; max-height: 80vh; border: 5px solid #ffd700; border-radius: 10px;"
+                         style="max-width: 100%; max-height: 80vh; border: 5px solid #ffffff; border-radius: 10px;"
                          onerror="this.src='https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                     <div style="position: absolute; top: 20px; right: 20px; color: white; font-size: 2rem; cursor: pointer; background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">×</div>
                     <div style="position: absolute; bottom: 20px; left: 0; right: 0; color: white; font-size: 1.5rem; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px; text-align: center;">${caption} - ${date}</div>
@@ -741,7 +738,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Tạo hiệu ứng nền
             createSnowflakes();
-            createMiniTrees();
             
             // Tải ảnh
             loadImages();

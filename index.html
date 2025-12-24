@@ -7,11 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --rose-50: #fff1f2;
@@ -24,7 +20,6 @@
             --rose-700: #be123c;
             --cream: #fef7f0;
             --burgundy: #722f37;
-            --gold: #d4a574;
         }
 
         body {
@@ -35,40 +30,170 @@
             min-height: 100vh;
         }
 
-        /* Floating Hearts */
-        .floating-hearts {
+        /* ========== PASSWORD GATE ========== */
+        .password-gate {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--rose-50) 50%, var(--rose-100) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .password-gate.hidden {
+            opacity: 0;
+            visibility: hidden;
             pointer-events: none;
-            z-index: 1000;
-            overflow: hidden;
         }
 
-        .heart {
+        .password-gate::before {
+            content: '';
             position: absolute;
-            font-size: 20px;
-            animation: float-up 8s linear infinite;
-            opacity: 0.7;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--rose-200) 0%, transparent 70%);
+            opacity: 0.3;
+            animation: pulse-glow 4s ease-in-out infinite;
         }
 
-        @keyframes float-up {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+        .gate-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 60px rgba(244, 63, 94, 0.2);
+            border: 2px solid var(--rose-200);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lock-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rose-400), var(--rose-600));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(244, 63, 94, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .lock-icon i { font-size: 2rem; color: white; }
+
+        .gate-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--rose-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .gate-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--rose-700);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--rose-200);
+            border-radius: 50px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--rose-50);
+            color: var(--burgundy);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .password-input:focus {
+            border-color: var(--rose-500);
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.2);
+        }
+
+        .password-input.error {
+            border-color: #ef4444;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-family: 'Cormorant Garamond', serif;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .error-message.show { display: block; animation: fadeIn 0.3s ease; }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--rose-400), var(--rose-600));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(244, 63, 94, 0.3);
+        }
+
+        .unlock-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(244, 63, 94, 0.4);
+        }
+
+        .gate-hint {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            color: var(--rose-600);
+            font-style: italic;
+            margin-top: 1.5rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content { display: none; }
+        .main-content.visible { display: block; animation: fadeIn 1s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* Music Player */
@@ -115,15 +240,7 @@
             transform: scale(1.1);
         }
 
-        .music-btn:active {
-            transform: scale(0.95);
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .volume-control { display: flex; align-items: center; gap: 8px; }
 
         .volume-slider {
             width: 80px;
@@ -154,28 +271,49 @@
             max-width: 250px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
             border: 1px solid var(--rose-200);
             display: none;
         }
 
-        .now-playing.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
+        .now-playing.show { display: block; animation: slideIn 0.3s ease; }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        /* Hero Section với style thiệp */
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float-up 8s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -183,14 +321,10 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(135deg, 
-                rgba(255, 241, 242, 0.9) 0%, 
-                rgba(255, 228, 230, 0.9) 50%, 
-                rgba(254, 247, 240, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(255, 241, 242, 0.9) 0%, rgba(255, 228, 230, 0.9) 50%, rgba(254, 247, 240, 0.9) 100%);
             padding: 2rem;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
         }
 
         .hero::before {
@@ -203,11 +337,6 @@
             background: radial-gradient(circle, var(--rose-200) 0%, transparent 70%);
             opacity: 0.3;
             animation: pulse-glow 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.1); opacity: 0.5; }
         }
 
         .date-range {
@@ -226,14 +355,8 @@
         }
 
         @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero h1 {
@@ -284,8 +407,6 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(5px);
             border-left: 3px solid var(--rose-500);
         }
 
@@ -302,13 +423,12 @@
             50% { transform: translateY(10px); }
         }
 
-        /* Counter Section với hiệu ứng */
+        /* Counter Section */
         .counter {
             padding: 5rem 2rem;
             background: linear-gradient(180deg, var(--cream) 0%, var(--rose-50) 100%);
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
 
         .counter::before {
@@ -318,8 +438,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, 
-                transparent, var(--rose-400), transparent);
+            background: linear-gradient(90deg, transparent, var(--rose-400), transparent);
         }
 
         .counter h2 {
@@ -327,7 +446,6 @@
             font-size: 2.8rem;
             color: var(--rose-600);
             margin-bottom: 3rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .counter-grid {
@@ -363,29 +481,21 @@
             box-shadow: 0 25px 50px rgba(244, 63, 94, 0.2);
         }
 
-        .counter-item .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--rose-500);
-        }
-
+        .counter-item .icon { font-size: 2.5rem; margin-bottom: 1rem; }
         .counter-item .value {
             font-family: 'Dancing Script', cursive;
             font-size: 3.5rem;
             color: var(--rose-500);
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
-
         .counter-item .label {
             color: var(--burgundy);
             font-size: 1rem;
             margin-top: 0.5rem;
             font-weight: 500;
-            letter-spacing: 1px;
         }
 
-        /* Gallery Section - 4 ẢNH 1 HÀNG */
+        /* Gallery Section */
         .gallery {
             padding: 5rem 2rem;
             background: linear-gradient(180deg, var(--rose-50) 0%, var(--cream) 100%);
@@ -397,20 +507,18 @@
             font-size: 2.8rem;
             color: var(--rose-600);
             margin-bottom: 3rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
-        /* CHỈNH SỬA QUAN TRỌNG: 4 ảnh 1 hàng */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 cột bằng nhau */
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             max-width: 1300px;
             margin: 0 auto;
         }
 
         .gallery-item {
-            aspect-ratio: 3/4; /* Tỉ lệ ảnh đứng (portrait) */
+            aspect-ratio: 3/4;
             background: linear-gradient(135deg, var(--rose-100), var(--rose-200));
             border-radius: 15px;
             cursor: pointer;
@@ -432,9 +540,7 @@
             transition: transform 0.5s ease;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
+        .gallery-item:hover img { transform: scale(1.1); }
 
         .gallery-caption {
             position: absolute;
@@ -445,16 +551,13 @@
             color: white;
             padding: 1rem;
             font-size: 0.9rem;
-            font-family: 'Montserrat', sans-serif;
             transform: translateY(100%);
             transition: transform 0.3s ease;
         }
 
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
-        }
+        .gallery-item:hover .gallery-caption { transform: translateY(0); }
 
-        /* Love Letter Section với hiệu ứng đánh máy */
+        /* Love Letter Section */
         .love-letter {
             padding: 5rem 2rem;
             background: white;
@@ -469,8 +572,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, 
-                transparent, var(--rose-400), transparent);
+            background: linear-gradient(90deg, transparent, var(--rose-400), transparent);
         }
 
         .love-letter h2 {
@@ -478,7 +580,6 @@
             font-size: 2.8rem;
             color: var(--rose-600);
             margin-bottom: 3rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .letter-card {
@@ -547,7 +648,6 @@
             text-align: center;
             color: white;
             position: relative;
-            overflow: hidden;
         }
 
         .footer::before {
@@ -557,8 +657,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, 
-                transparent, white, transparent);
+            background: linear-gradient(90deg, transparent, white, transparent);
         }
 
         .footer-hearts {
@@ -585,234 +684,320 @@
             font-size: 1.1rem;
         }
 
-        /* Responsive cho 4 ảnh */
+        /* Responsive */
         @media (max-width: 1200px) {
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 cột trên tablet */
-                max-width: 800px;
-            }
-            
-            .gallery-item {
-                aspect-ratio: 4/3; /* Đổi lại tỉ lệ ngang trên tablet */
-            }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); max-width: 800px; }
+            .gallery-item { aspect-ratio: 4/3; }
         }
 
         @media (max-width: 768px) {
-            .counter-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .gallery-grid {
-                grid-template-columns: 1fr; /* 1 cột trên mobile */
-                max-width: 500px;
-            }
-            
-            .gallery-item {
-                aspect-ratio: 4/3;
-            }
-            
-            .letter-card {
-                padding: 2rem;
-            }
-            
-            .letter-content {
-                font-size: 1.2rem;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .music-player {
-                top: 10px;
-                right: 10px;
-            }
-            
-            .music-controls {
-                padding: 8px 12px;
-            }
-            
-            .music-btn {
-                font-size: 1.2rem;
-                width: 35px;
-                height: 35px;
-            }
-            
-            .volume-slider {
-                width: 60px;
-            }
+            .counter-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: 1fr; max-width: 500px; }
+            .letter-card { padding: 2rem; }
+            .letter-content { font-size: 1.2rem; }
+            .gate-card { padding: 2rem 1.5rem; }
+            .gate-title { font-size: 2rem; }
+            .music-player { top: 10px; right: 10px; }
+            .music-controls { padding: 8px 12px; }
+            .music-btn { font-size: 1.2rem; width: 35px; height: 35px; }
+            .volume-slider { width: 60px; }
         }
 
         @media (max-width: 480px) {
-            .counter-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .date-range {
-                font-size: 0.9rem;
-                padding: 0.6rem 1.5rem;
-            }
-            
-            .couple-names {
-                font-size: 1.8rem;
-            }
-            
-            .hero-quote {
-                font-size: 1.1rem;
-                padding: 1rem;
-            }
-            
-            .gallery-item {
-                aspect-ratio: 3/4;
-            }
+            .counter-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .date-range { font-size: 0.9rem; padding: 0.6rem 1.5rem; }
+            .couple-names { font-size: 1.8rem; }
+            .hero-quote { font-size: 1.1rem; padding: 1rem; }
+            .gallery-item { aspect-ratio: 3/4; }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Hearts -->
-    <div class="floating-hearts" id="floatingHearts"></div>
-
-    <!-- Music Player -->
-    <div class="music-player">
-        <div class="now-playing" id="nowPlaying">
-            <i class="fas fa-music" style="margin-right: 5px;"></i>
-            <span id="songTitle">Only Love</span>
-        </div>
-        <div class="music-controls">
-            <button class="music-btn" id="prevBtn" title="Bài trước">
-                <i class="fas fa-step-backward"></i>
-            </button>
-            <button class="music-btn" id="playBtn" title="Phát nhạc">
-                <i class="fas fa-play"></i>
-            </button>
-            <button class="music-btn" id="nextBtn" title="Bài tiếp">
-                <i class="fas fa-step-forward"></i>
-            </button>
-            <div class="volume-control">
-                <button class="music-btn" id="muteBtn" title="Tắt tiếng">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-                <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+    <!-- PASSWORD GATE -->
+    <div class="password-gate" id="passwordGate">
+        <div class="gate-card">
+            <div class="lock-icon">
+                <i class="fas fa-lock" id="lockIcon"></i>
             </div>
+            <h1 class="gate-title">Chỉ dành cho em</h1>
+            <p class="gate-subtitle">Nhập mật khẩu để mở khóa trái tim anh 💕</p>
+            
+            <form id="passwordForm">
+                <input type="password" class="password-input" id="passwordInput" placeholder="Nhập mật khẩu..." autocomplete="off">
+                <p class="error-message" id="errorMessage">Sai mật khẩu rồi em ơi! 💔</p>
+                <button type="submit" class="unlock-btn">Mở khóa trái tim 💗</button>
+            </form>
+            
+            <p class="gate-hint">Gợi ý: Ngày đặc biệt của chúng ta 💑</p>
         </div>
     </div>
 
-    <!-- Audio Element -->
-    <audio id="backgroundMusic" loop>
-        <!-- Đổi link này thành đường dẫn tới file nhạc của bạn -->
-        <source src="onlylove.mp3" type="audio/mpeg">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        Trình duyệt của bạn không hỗ trợ phát nhạc.
-    </audio>
+    <!-- MAIN CONTENT -->
+    <div class="main-content" id="mainContent">
+        <!-- Floating Hearts -->
+        <div class="floating-hearts" id="floatingHearts"></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="date-range">4.12.2025 - 4.1.2026</div>
-        <h1>Happy 1 Month</h1>
-        <div class="couple-names">
-            <span></span>
-            <span class="heart-icon">❤️</span>
-            <span></span>
-        </div>
-        <p class="hero-quote">
-            "You're my serendipity.<br>
-            I wasn't looking for you.<br>
-            I wasn't expecting you.<br>
-            But I'm very lucky I met you."
-        </p>
-        <div class="scroll-indicator">👇</div>
-    </section>
-
-    <!-- Counter Section -->
-    <section class="counter">
-        <h2>✨ Our Love Journey ✨</h2>
-        <div class="counter-grid">
-            <div class="counter-item">
-                <div class="icon">📅</div>
-                <div class="value" id="days">30</div>
-                <div class="label">Days</div>
+        <!-- Music Player -->
+        <div class="music-player">
+            <div class="now-playing" id="nowPlaying">
+                <i class="fas fa-music" style="margin-right: 5px;"></i>
+                <span id="songTitle">Only Love</span>
             </div>
-            <div class="counter-item">
-                <div class="icon">⏰</div>
-                <div class="value" id="hours">720</div>
-                <div class="label">Hours</div>
-            </div>
-            <div class="counter-item">
-                <div class="icon">⏱️</div>
-                <div class="value" id="minutes">43200</div>
-                <div class="label">Minutes</div>
-            </div>
-            <div class="counter-item">
-                <div class="icon">💓</div>
-                <div class="value" id="seconds">2592000</div>
-                <div class="label">Seconds</div>
+            <div class="music-controls">
+                <button class="music-btn" id="prevBtn" title="Bài trước">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="music-btn" id="playBtn" title="Phát nhạc">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="music-btn" id="nextBtn" title="Bài tiếp">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+                <div class="volume-control">
+                    <button class="music-btn" id="muteBtn" title="Tắt tiếng">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+                </div>
             </div>
         </div>
-        <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;">
-            Started: December 4th, 2025 at 23:00
-        </p>
-    </section>
 
-    <!-- Gallery Section với 4 ẢNH 1 HÀNG -->
-    <section class="gallery">
-        <h2>📸 Our Beautiful Moments 📸</h2>
-        <div class="gallery-grid" id="galleryGrid"></div>
-    </section>
+        <!-- Audio Element -->
+        <audio id="backgroundMusic">
+            <source src="onlylove.mp3" type="audio/mpeg">
+        </audio>
 
-    <!-- Love Letter Section -->
-    <section class="love-letter">
-        <h2>💌 A Message From My Heart 💌</h2>
-        <div class="letter-card">
-            <div class="letter-content" id="typedText"></div>
-            <div class="signature">
-                With all my love,<br>
-                Anh Nguyên
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="date-range">4.12.2025 - 4.1.2026</div>
+            <h1>Happy 1 Month</h1>
+            <div class="couple-names">
+                <span></span>
+                <span class="heart-icon">❤️</span>
+                <span></span>
             </div>
-        </div>
-    </section>
+            <p class="hero-quote">
+                "You're my serendipity.<br>
+                I wasn't looking for you.<br>
+                I wasn't expecting you.<br>
+                But I'm very lucky I met you."
+            </p>
+            <div class="scroll-indicator">👇</div>
+        </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-hearts">💕 ❤️ 💕</div>
-        <h3>Just the beginning ✨</h3>
-    </footer>
+        <!-- Counter Section -->
+        <section class="counter">
+            <h2>✨ Our Love Journey ✨</h2>
+            <div class="counter-grid">
+                <div class="counter-item">
+                    <div class="icon">📅</div>
+                    <div class="value" id="days">0</div>
+                    <div class="label">Days</div>
+                </div>
+                <div class="counter-item">
+                    <div class="icon">⏰</div>
+                    <div class="value" id="hours">0</div>
+                    <div class="label">Hours</div>
+                </div>
+                <div class="counter-item">
+                    <div class="icon">⏱️</div>
+                    <div class="value" id="minutes">0</div>
+                    <div class="label">Minutes</div>
+                </div>
+                <div class="counter-item">
+                    <div class="icon">💓</div>
+                    <div class="value" id="seconds">0</div>
+                    <div class="label">Seconds</div>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;">
+                Started: December 4th, 2025 at 23:00
+            </p>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="gallery">
+            <h2>📸 Our Beautiful Moments 📸</h2>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
+
+        <!-- Love Letter Section -->
+        <section class="love-letter">
+            <h2>💌 A Message From My Heart 💌</h2>
+            <div class="letter-card">
+                <div class="letter-content" id="typedText"></div>
+                <div class="signature">
+                    With all my love,<br>
+                    Anh Nguyên
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-hearts">💕 ❤️ 💕</div>
+            <h3>Just the beginning ✨</h3>
+            <p>Here's to many more beautiful moments together</p>
+        </footer>
+    </div>
 
     <script>
-        // Danh sách ảnh của bạn
-        const myImages = [
-            {
-                url: "https://i.postimg.cc/K88X5c78/1.jpg",
-                date: "4.11.2025",
-                caption: ""
-            },
-            {
-                url: "https://i.postimg.cc/wjjKkx5X/2.jpg",
-                date: "22.11.2025",
-                caption: ""
-            },
-            {
-                url: "https://i.postimg.cc/kggryMN8/3.jpg",   
-                date: "4.12.2025",
-                caption: ""
-            },
-            {
-                url: "https://i.postimg.cc/mggxSZ33/4.jpg",
-                date: "5.12.2025",
-                caption: ""
-            }
+        // ========== CẤU HÌNH ==========
+        const correctPassword = "041225"; // ĐỔI MẬT KHẨU TẠI ĐÂY
+
+        // Danh sách nhạc (thêm/bớt bài tại đây)
+        const playlist = [
+            { title: "Only Love", src: "onlylove.mp3" },
+            { title: "Từng Ngày Yêu Em", src: "tungngayyeuem.mp3" },
+            { title: "Yêu Em Hơn Mỗi Ngày", src: "yeuemhonmoingay.mp3" }
         ];
 
-        // Lời nhắn (ĐÃ SỬA LỖI - CHỈ 1 DÒNG const message)
+        // Danh sách ảnh
+        const myImages = [
+            { url: "https://i.postimg.cc/K88X5c78/1.jpg", date: "4.11.2025", caption: "" },
+            { url: "https://i.postimg.cc/wjjKkx5X/2.jpg", date: "22.11.2025", caption: "" },
+            { url: "https://i.postimg.cc/kggryMN8/3.jpg", date: "4.12.2025", caption: "" },
+            { url: "https://i.postimg.cc/mggxSZ33/4.jpg", date: "5.12.2025", caption: "" }
+        ];
+
+        // Lời nhắn
         const message = `Em yêu ơi,<br><br>
 Thật khó tin khi đã một tháng trôi qua kể từ ngày chúng ta chính thức bắt đầu hành trình yêu nhau. Một tháng có thể chưa đủ dài để anh hiểu hết về em, nhưng đủ để anh biết mình muốn dành nhiều tháng hơn nữa bên cạnh em.<br><br>
 Mong rằng mỗi tháng trôi qua, tình yêu của chúng ta không chỉ lớn lên, mà còn ấm áp và bình yên hơn nữa.<br><br>
 Thương em... ❤️`;
 
-        // Tạo hiệu ứng trái tim bay
+        // ========== PASSWORD GATE ==========
+        const passwordGate = document.getElementById('passwordGate');
+        const mainContent = document.getElementById('mainContent');
+        const passwordForm = document.getElementById('passwordForm');
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMessage = document.getElementById('errorMessage');
+        const lockIcon = document.getElementById('lockIcon');
+
+        if (sessionStorage.getItem('anniversary_unlocked') === 'true') {
+            passwordGate.classList.add('hidden');
+            mainContent.classList.add('visible');
+            initMainContent();
+        }
+
+        passwordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (passwordInput.value === correctPassword) {
+                lockIcon.className = 'fas fa-unlock';
+                sessionStorage.setItem('anniversary_unlocked', 'true');
+                
+                setTimeout(() => {
+                    passwordGate.classList.add('hidden');
+                    mainContent.classList.add('visible');
+                    initMainContent();
+                }, 800);
+            } else {
+                passwordInput.classList.add('error');
+                errorMessage.classList.add('show');
+                
+                setTimeout(() => {
+                    passwordInput.classList.remove('error');
+                    errorMessage.classList.remove('show');
+                }, 1500);
+            }
+        });
+
+        // ========== MAIN CONTENT INIT ==========
+        function initMainContent() {
+            createHearts();
+            loadGallery();
+            typeWriter();
+            calculateLoveTime();
+            setInterval(calculateLoveTime, 1000);
+            initMusicPlayer();
+        }
+
+        // ========== MUSIC PLAYER ==========
+        const audio = document.getElementById('backgroundMusic');
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const nowPlaying = document.getElementById('nowPlaying');
+        const songTitle = document.getElementById('songTitle');
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isMuted = false;
+        let lastVolume = 50;
+
+        function initMusicPlayer() {
+            audio.volume = volumeSlider.value / 100;
+            loadSong(0);
+            
+            setTimeout(() => {
+                playMusic();
+            }, 2000);
+        }
+
+        function playMusic() {
+            audio.play().catch(() => console.log("Autoplay blocked"));
+            isPlaying = true;
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            nowPlaying.classList.add('show');
+        }
+
+        function pauseMusic() {
+            audio.pause();
+            isPlaying = false;
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+
+        function loadSong(index) {
+            if (index < 0) index = playlist.length - 1;
+            if (index >= playlist.length) index = 0;
+            
+            currentSongIndex = index;
+            audio.src = playlist[currentSongIndex].src;
+            songTitle.textContent = playlist[currentSongIndex].title;
+            
+            if (isPlaying) audio.play();
+        }
+
+        playBtn.addEventListener('click', () => isPlaying ? pauseMusic() : playMusic());
+        prevBtn.addEventListener('click', () => loadSong(currentSongIndex - 1));
+        nextBtn.addEventListener('click', () => loadSong(currentSongIndex + 1));
+
+        volumeSlider.addEventListener('input', () => {
+            const volume = volumeSlider.value / 100;
+            audio.volume = volume;
+            lastVolume = volumeSlider.value;
+            
+            if (volume === 0) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else if (volume < 0.5) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        });
+
+        muteBtn.addEventListener('click', () => {
+            if (isMuted) {
+                audio.volume = lastVolume / 100;
+                volumeSlider.value = lastVolume;
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                isMuted = false;
+            } else {
+                lastVolume = volumeSlider.value;
+                audio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                isMuted = true;
+            }
+        });
+
+        audio.addEventListener('ended', () => loadSong(currentSongIndex + 1));
+
+        // ========== FLOATING HEARTS ==========
         function createHearts() {
             const container = document.getElementById('floatingHearts');
             const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘'];
@@ -830,7 +1015,7 @@ Thương em... ❤️`;
             }
         }
 
-        // Tải ảnh vào gallery - 4 ảnh 1 hàng
+        // ========== GALLERY ==========
         function loadGallery() {
             const galleryGrid = document.getElementById('galleryGrid');
             
@@ -839,54 +1024,15 @@ Thương em... ❤️`;
                 galleryItem.className = 'gallery-item';
                 
                 galleryItem.innerHTML = `
-                    <img src="${imageData.url}" alt="${imageData.caption}"
-                         onerror="this.src='https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80'">
+                    <img src="${imageData.url}" alt="${imageData.caption}">
                     <div class="gallery-caption">${imageData.caption}<br>${imageData.date}</div>
                 `;
-                
-                galleryItem.onclick = function() {
-                    showImageModal(imageData.url, imageData.caption, imageData.date);
-                };
                 
                 galleryGrid.appendChild(galleryItem);
             });
         }
 
-        // Hiển thị ảnh lớn
-        function showImageModal(imgUrl, caption, date) {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.95);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 2000;
-                cursor: pointer;
-            `;
-            
-            modal.innerHTML = `
-                <div style="max-width: 90%; max-height: 90%; position: relative;">
-                    <img src="${imgUrl}" alt="${caption}" 
-                         style="max-width: 100%; max-height: 80vh; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.5);"
-                         onerror="this.src='https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                    <div style="position: absolute; top: 20px; right: 20px; color: white; font-size: 2.5rem; cursor: pointer; background: rgba(190, 18, 60, 0.7); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">×</div>
-                    <div style="position: absolute; bottom: 20px; left: 0; right: 0; color: white; font-size: 1.5rem; background: rgba(190, 18, 60, 0.8); padding: 15px; border-radius: 10px; text-align: center;">${caption} - ${date}</div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            modal.onclick = function() {
-                document.body.removeChild(modal);
-            };
-        }
-
-        // Hiệu ứng gõ chữ
+        // ========== TYPEWRITER ==========
         function typeWriter() {
             const typedTextElement = document.getElementById('typedText');
             let charIndex = 0;
@@ -896,29 +1042,20 @@ Thương em... ❤️`;
                     typedTextElement.innerHTML = message.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
                     charIndex++;
                     
-                    // Tốc độ gõ chậm: 50ms mỗi ký tự
                     let delay = 50;
-                    
-                    // Chờ lâu hơn sau dấu câu
                     const currentChar = message.charAt(charIndex - 1);
-                    if (currentChar === '.' || currentChar === '!' || currentChar === '?' || currentChar === '^') {
-                        delay = 300;
-                    } else if (currentChar === '<' && message.charAt(charIndex) === 'b') {
-                        delay = 200;
-                    }
+                    if (currentChar === '.' || currentChar === '!' || currentChar === '?') delay = 300;
                     
                     setTimeout(typing, delay);
                 } else {
-                    // Khi gõ xong, xóa con trỏ nhấp nháy
                     typedTextElement.innerHTML = message;
                 }
             }
             
-            // Bắt đầu gõ chữ sau 1.5 giây
             setTimeout(typing, 1500);
         }
 
-        // Tính thời gian yêu nhau từ 23:00 ngày 4/12/2025
+        // ========== LOVE COUNTER ==========
         function calculateLoveTime() {
             const loveStartDate = new Date('2025-12-04T23:00:00');
             const now = new Date();
@@ -942,169 +1079,6 @@ Thương em... ❤️`;
             document.getElementById('minutes').textContent = minutes;
             document.getElementById('seconds').textContent = seconds;
         }
-
-        // ========== PHẦN NHẠC ==========
-        const audio = document.getElementById('backgroundMusic');
-        const playBtn = document.getElementById('playBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const nowPlaying = document.getElementById('nowPlaying');
-        const songTitle = document.getElementById('songTitle');
-
-        // Danh sách bài hát (bạn có thể thêm nhiều bài hơn)
-        const playlist = [
-            {
-                title: "Từng Ngày Yêu Em",
-                src: "tungngayyeuem.mp3"
-            },
-            {
-                title: "Only Love",
-                src: "onlylove.mp3"
-            },
-            {
-                title: "Yêu Nhun hơn mỗi ngày",
-                src: "yeuemhonmoingay.mp3"
-            }
-        ];
-
-        let currentSongIndex = 0;
-        let isPlaying = false;
-        let isMuted = false;
-        let lastVolume = 50;
-
-        // Khởi tạo âm lượng
-        audio.volume = volumeSlider.value / 100;
-
-        // Hàm phát nhạc
-        function playMusic() {
-            audio.play();
-            isPlaying = true;
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            playBtn.title = "Tạm dừng";
-            nowPlaying.classList.add('show');
-        }
-
-        // Hàm tạm dừng nhạc
-        function pauseMusic() {
-            audio.pause();
-            isPlaying = false;
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playBtn.title = "Phát nhạc";
-        }
-
-        // Hàm tải và phát bài hát
-        function loadSong(index) {
-            if (index < 0) index = playlist.length - 1;
-            if (index >= playlist.length) index = 0;
-            
-            currentSongIndex = index;
-            const song = playlist[currentSongIndex];
-            
-            audio.src = song.src;
-            songTitle.textContent = song.title;
-            
-            if (isPlaying) {
-                audio.play();
-            }
-        }
-
-        // Sự kiện nút phát/tạm dừng
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                pauseMusic();
-            } else {
-                playMusic();
-            }
-        });
-
-        // Sự kiện nút bài trước
-        prevBtn.addEventListener('click', () => {
-            loadSong(currentSongIndex - 1);
-        });
-
-        // Sự kiện nút bài tiếp
-        nextBtn.addEventListener('click', () => {
-            loadSong(currentSongIndex + 1);
-        });
-
-        // Sự kiện điều chỉnh âm lượng
-        volumeSlider.addEventListener('input', () => {
-            const volume = volumeSlider.value / 100;
-            audio.volume = volume;
-            lastVolume = volumeSlider.value;
-            
-            // Cập nhật icon âm lượng
-            if (volume === 0) {
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            } else if (volume < 0.5) {
-                muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-            } else {
-                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-            }
-        });
-
-        // Sự kiện nút tắt tiếng
-        muteBtn.addEventListener('click', () => {
-            if (isMuted) {
-                // Bật tiếng
-                audio.volume = lastVolume / 100;
-                volumeSlider.value = lastVolume;
-                muteBtn.innerHTML = lastVolume === 0 ? 
-                    '<i class="fas fa-volume-mute"></i>' : 
-                    (lastVolume < 50 ? '<i class="fas fa-volume-down"></i>' : '<i class="fas fa-volume-up"></i>');
-                isMuted = false;
-            } else {
-                // Tắt tiếng
-                lastVolume = volumeSlider.value;
-                audio.volume = 0;
-                volumeSlider.value = 0;
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                isMuted = true;
-            }
-        });
-
-        // Tự động phát nhạc khi trang tải xong (sau 2 giây)
-        setTimeout(() => {
-            playMusic();
-        }, 2000);
-
-        // Hiển thị thông báo khi bài hát kết thúc
-        audio.addEventListener('ended', () => {
-            // Tự động chuyển bài tiếp theo
-            loadSong(currentSongIndex + 1);
-        });
-
-        // ========== KẾT THÚC PHẦN NHẠC ==========
-
-        // Khởi tạo khi trang tải xong
-        document.addEventListener('DOMContentLoaded', function() {
-            createHearts();
-            loadGallery();
-            typeWriter();
-            calculateLoveTime();
-            
-            // Cập nhật bộ đếm mỗi giây
-            setInterval(calculateLoveTime, 1000);
-            
-            // Hiệu ứng scroll
-            const scrollIndicator = document.querySelector('.scroll-indicator');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 100) {
-                    scrollIndicator.style.opacity = '0';
-                } else {
-                    scrollIndicator.style.opacity = '1';
-                }
-            });
-        });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-

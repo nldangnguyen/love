@@ -502,7 +502,6 @@
                 <div class="message-content">
                     <p id="typedText"></p>
                     <div class="signature">
-                        <p>Với tất cả tình yêu,</p>
                         <p class="signature-name">Anh Nguyên</p>
                         <p></p>
                     </div>
@@ -542,7 +541,7 @@
 
         <footer class="footer">
             <p>Made with <i class="fas fa-heart heartbeat"></i> by "Anh iu"</p>
-            <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem;">30 ngày đầu tiên trong hành trình dài phía trước...</p>
+            <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem;"></p>
         </footer>
     </div>
 
@@ -712,9 +711,10 @@
             };
             
             const message = `Em yêu ơi,<br><br>
-Thật khó tin khi đã 20 ngày trôi qua kể từ ngày 4/12/2025 - ngày chúng ta chính thức bắt đầu hành trình yêu nhau. 20 ngày tuy không dài nhưng với anh, mỗi ngày bên em đều là một món quà quý giá.<br><br>
-Anh vẫn nhớ như in ngày đầu tiên ấy, từng nụ cười, từng câu chuyện, từng khoảnh khắc bên nhau đều trở thành những kỷ niệm đẹp mà anh luôn trân trọng. Cảm ơn em đã ở bên anh những ngày qua, cảm ơn em đã là chính em.<br><br>
-20 ngày chỉ là khởi đầu, anh mong được đồng hành cùng em trong nhiều ngày, nhiều tháng, nhiều năm tiếp theo. Hãy cùng nhau viết tiếp câu chuyện tình yêu của chúng ta em nhé!<br><br>
+Thật khó tin khi đã một tháng trôi qua kể từ ngày tụi mình chính thức bắt đầu hành trình yêu nhau. Tuy không dài nhưng đủ để anh biết anh đã gặp đúng người.<br><br>
+Cảm ơn em đã cho anh cơ hội bên em và chăm sóc em ^^
+Mỗi khoảnh khắc bên em đều làm anh cảm thấy cuộc sống này thật ý nghĩa. <br><br>
+30 ngày đầu tiên chỉ là khởi đầu. Anh mong mình sẽ có thêm nhiều tháng, nhiều năm như thế này nữa nha. Cùng nhau trải qua mọi điều trong cuộc sống, vui có, buồn có, nhưng quan trọng là có nhau.<br><br>
 Yêu em nhiều lắm... ❤️`;
             
             const typedTextElement = document.getElementById('typedText');
@@ -724,7 +724,7 @@ Yêu em nhiều lắm... ❤️`;
                 if (charIndex < message.length) {
                     typedTextElement.innerHTML = message.substring(0, charIndex + 1);
                     charIndex++;
-                    setTimeout(typeWriter, 30);
+                    setTimeout(typeWriter,50);
                 }
             }
             
@@ -764,3 +764,4 @@ Yêu em nhiều lắm... ❤️`;
     </script>
 </body>
 </html>
+

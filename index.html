@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -177,9 +176,12 @@
             z-index: 1;
             line-height: 1.8;
             padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            border-left: 3px solid var(--rose-500);
         }
 
         .scroll-indicator {
@@ -187,6 +189,7 @@
             bottom: 2rem;
             animation: bounce 2s infinite;
             font-size: 1.5rem;
+            color: var(--rose-500);
         }
 
         @keyframes bounce {
@@ -555,13 +558,16 @@
         <h1>Happy 1 Month</h1>
         <div class="couple-names">
             <span></span>
-            <span class="heart-icon"></span>
+            <span class="heart-icon">❤️</span>
             <span></span>
         </div>
         <p class="hero-quote">
-            "Một tháng bên nhau, ngàn kỷ niệm đẹp. Cảm ơn em đã đến bên anh, là ánh sáng trong những ngày bình thường của anh."
+            "You're my serendipity.<br>
+            I wasn't looking for you.<br>
+            I wasn't expecting you.<br>
+            But I'm very lucky I met you."
         </p>
-        <div class="scroll-indicator"></div>
+        <div class="scroll-indicator">👇</div>
     </section>
 
     <!-- Counter Section -->
@@ -644,13 +650,11 @@
             }
         ];
 
-        // Lời nhắn
+        // Lời nhắn (ĐÃ SỬA LỖI - CHỈ 1 DÒNG const message)
         const message = `Em yêu ơi,<br><br>
-const message = `Em yêu ơi,<br><br>
 Thật khó tin khi đã một tháng trôi qua kể từ ngày tụi mình chính thức bắt đầu hành trình yêu nhau. Một tháng có thể chưa đủ dài để anh hiểu hết về em, nhưng đủ để anh biết mình muốn dành nhiều tháng hơn nữa bên cạnh em.<br><br>
-Cảm ơn em đã cho anh cơ hội yêu em và chăm sóc em ^^ Mỗi khoảnh khắc bên em đều làm anh hạnh phúc.<br><br>
 Mong rằng mỗi tháng trôi qua, tình yêu của chúng mình không chỉ lớn lên, mà còn ấm áp và bình yên hơn nữa.<br><br>
-Yêu em nhiều lắm... ❤️`;
+Thương em... ❤️`;
 
         // Tạo hiệu ứng trái tim bay
         function createHearts() {
@@ -806,4 +810,3 @@ Yêu em nhiều lắm... ❤️`;
     </script>
 </body>
 </html>
-

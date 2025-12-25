@@ -1096,7 +1096,7 @@
         </div>
 
         <!-- Audio Element -->
-        <audio id="backgroundMusic" loop>
+        <audio id="backgroundMusic">
             <source src="onlylove.mp3" type="audio/mpeg">
         </audio>
 
@@ -1219,25 +1219,40 @@ Mong rằng mỗi tháng trôi qua, tình yêu của chúng ta không chỉ lớ
 
 Anh thương em...`;
 
-        // ========== PASSWORD GATE ==========
+        // ========== BIẾN TOÀN CỤC ==========
+        let currentSongIndex = 0;
+        let revealedCounters = {};
+        let letterRevealed = false;
+        let isTyping = false;
+        let isPlaying = false;
+
+        // ========== DOM ELEMENTS ==========
         const passwordGate = document.getElementById('passwordGate');
         const mainContent = document.getElementById('mainContent');
         const passwordForm = document.getElementById('passwordForm');
         const passwordInput = document.getElementById('passwordInput');
         const errorMessage = document.getElementById('errorMessage');
         const lockIcon = document.getElementById('lockIcon');
+        const audio = document.getElementById('backgroundMusic');
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const songTitle = document.getElementById('songTitle');
+        const togglePlaylistBtn = document.getElementById('togglePlaylist');
+        const closePlaylistBtn = document.getElementById('closePlaylist');
+        const playlistPanel = document.getElementById('playlistPanel');
+        const playlistItemsContainer = document.getElementById('playlistItems');
 
-        let currentSongIndex = 0;
-        let revealedCounters = {};
-        let letterRevealed = false;
-        let isTyping = false;
-
+        // ========== KIỂM TRA SESSION ==========
         if (sessionStorage.getItem('anniversary_unlocked') === 'true') {
             passwordGate.classList.add('hidden');
             mainContent.classList.add('visible');
             initMainContent();
         }
 
+        // ========== PASSWORD GATE ==========
         passwordForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1277,7 +1292,6 @@ Anh thương em...`;
 
             createCustomAlert(messages[id]);
 
-            // Check if all revealed
             if (Object.keys(revealedCounters).length === 4) {
                 setTimeout(() => {
                     const days = document.getElementById('days').textContent;
@@ -1299,7 +1313,6 @@ Anh thương em...`;
             letterCard.classList.add('revealed');
             letterRevealed = true;
             
-            // Start typing effect
             typedText.innerHTML = '';
             let index = 0;
             isTyping = true;
@@ -1385,7 +1398,7 @@ Anh thương em...`;
             }
         }
 
-        // ========== GALLERY (với blur) ==========
+        // ========== GALLERY ==========
         function initGallery() {
             const grid = document.getElementById('galleryGrid');
             
@@ -1430,20 +1443,6 @@ Anh thương em...`;
         }
 
         // ========== MUSIC PLAYER ==========
-        const audio = document.getElementById('backgroundMusic');
-        const playBtn = document.getElementById('playBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const songTitle = document.getElementById('songTitle');
-        const togglePlaylistBtn = document.getElementById('togglePlaylist');
-        const closePlaylistBtn = document.getElementById('closePlaylist');
-        const playlistPanel = document.getElementById('playlistPanel');
-        const playlistItems = document.getElementById('playlistItems');
-
-        let isPlaying = false;
-
         function initMusicPlayer() {
             audio.volume = volumeSlider.value / 100;
             loadSong(0);
@@ -1452,77 +1451,168 @@ Anh thương em...`;
             prevBtn.onclick = prevSong;
             nextBtn.onclick = nextSong;
             muteBtn.onclick = toggleMute;
-            volumeSlider.oninput = () => { audio.volume = volumeSlider.value / 100; };
-            togglePlaylistBtn.onclick = () => playlistPanel.classList.toggle('show');
-            closePlaylistBtn.onclick = () => playlistPanel.classList.remove('show');
             
-            audio.onended = nextSong;
+            volumeSlider.oninput = function() {
+                audio.volume = this.value / 100;
+                updateMuteIcon();
+            };
+            
+            togglePlaylistBtn.onclick = function() {
+                playlistPanel.classList.toggle('show');
+            };
+            
+            closePlaylistBtn.onclick = function() {
+                playlistPanel.classList.remove('show');
+            };
+            
+            // Khi bài hát kết thúc, chuyển sang bài tiếp theo
+            audio.onended = function() {
+                nextSong();
+            };
+
+            // Khi audio có thể phát, cập nhật UI
+            audio.oncanplay = function() {
+                console.log('Audio ready to play:', playlist[currentSongIndex].title);
+            };
+
+            // Xử lý lỗi audio
+            audio.onerror = function(e) {
+                console.error('Audio error:', e);
+                console.error('Could not load:', playlist[currentSongIndex].src);
+            };
         }
 
         function loadSong(index) {
+            if (index < 0 || index >= playlist.length) return;
+            
             currentSongIndex = index;
-            audio.src = playlist[index].src;
-            songTitle.textContent = playlist[index].title;
+            const song = playlist[currentSongIndex];
+            
+            // Dừng audio hiện tại
+            audio.pause();
+            
+            // Cập nhật nguồn audio
+            audio.src = song.src;
+            audio.load();
+            
+            // Cập nhật tiêu đề bài hát
+            songTitle.textContent = song.title;
+            
+            // Cập nhật UI playlist
             updatePlaylistUI();
+            
+            console.log('Loaded song:', song.title, 'Source:', song.src);
+        }
+
+        function playSong(index) {
+            loadSong(index);
+            
+            // Đợi audio load xong rồi phát
+            audio.onloadeddata = function() {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    console.log('Playing:', playlist[currentSongIndex].title);
+                }).catch(err => {
+                    console.error('Play error:', err);
+                });
+            };
         }
 
         function togglePlay() {
             if (isPlaying) {
                 audio.pause();
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                isPlaying = false;
             } else {
-                audio.play();
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                audio.play().then(() => {
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    isPlaying = true;
+                }).catch(err => {
+                    console.error('Play error:', err);
+                });
             }
-            isPlaying = !isPlaying;
         }
 
         function prevSong() {
-            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-            loadSong(currentSongIndex);
-            if (isPlaying) audio.play();
+            let newIndex = currentSongIndex - 1;
+            if (newIndex < 0) {
+                newIndex = playlist.length - 1;
+            }
+            playSong(newIndex);
         }
 
         function nextSong() {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentSongIndex);
-            if (isPlaying) audio.play();
+            let newIndex = currentSongIndex + 1;
+            if (newIndex >= playlist.length) {
+                newIndex = 0;
+            }
+            playSong(newIndex);
         }
 
         function toggleMute() {
             audio.muted = !audio.muted;
-            muteBtn.innerHTML = audio.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            updateMuteIcon();
+        }
+
+        function updateMuteIcon() {
+            if (audio.muted || audio.volume === 0) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else if (audio.volume < 0.5) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
         }
 
         // ========== PLAYLIST ==========
         function initPlaylist() {
+            playlistItemsContainer.innerHTML = '';
+            
             playlist.forEach((song, index) => {
                 const item = document.createElement('div');
                 item.className = 'playlist-item' + (index === currentSongIndex ? ' active' : '');
+                item.setAttribute('data-index', index);
+                
                 item.innerHTML = `
                     <span class="playlist-item-number">${index + 1}</span>
                     <div class="playlist-item-info">
                         <div class="playlist-item-title">${song.title}</div>
                     </div>
-                    ${index === currentSongIndex ? '<span class="playlist-item-playing">♪</span>' : ''}
+                    ${index === currentSongIndex && isPlaying ? '<span class="playlist-item-playing"><i class="fas fa-music"></i></span>' : ''}
                 `;
-                item.onclick = () => {
-                    loadSong(index);
-                    if (!isPlaying) togglePlay();
+                
+                // Thêm sự kiện click để phát bài hát
+                item.onclick = function() {
+                    playSong(index);
                 };
-                playlistItems.appendChild(item);
+                
+                playlistItemsContainer.appendChild(item);
             });
         }
 
         function updatePlaylistUI() {
-            const items = playlistItems.querySelectorAll('.playlist-item');
+            const items = playlistItemsContainer.querySelectorAll('.playlist-item');
+            
             items.forEach((item, index) => {
-                item.className = 'playlist-item' + (index === currentSongIndex ? ' active' : '');
-                const playingIcon = item.querySelector('.playlist-item-playing');
-                if (index === currentSongIndex && !playingIcon) {
-                    item.innerHTML += '<span class="playlist-item-playing">♪</span>';
-                } else if (index !== currentSongIndex && playingIcon) {
-                    playingIcon.remove();
+                // Cập nhật class active
+                if (index === currentSongIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+                
+                // Cập nhật icon đang phát
+                const existingIcon = item.querySelector('.playlist-item-playing');
+                if (existingIcon) {
+                    existingIcon.remove();
+                }
+                
+                if (index === currentSongIndex && isPlaying) {
+                    const playingIcon = document.createElement('span');
+                    playingIcon.className = 'playlist-item-playing';
+                    playingIcon.innerHTML = '<i class="fas fa-music"></i>';
+                    item.appendChild(playingIcon);
                 }
             });
         }

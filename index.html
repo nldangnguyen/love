@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -196,7 +196,24 @@
             to { opacity: 1; }
         }
 
-        /* Music Player */
+        /* ========== BLURRED DATE STYLES ========== */
+        .blurred-date {
+            filter: blur(8px);
+            position: relative;
+            transition: filter 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .blurred-date:hover {
+            filter: blur(5px);
+        }
+
+        .blurred-date.revealed {
+            filter: blur(0);
+        }
+
+        /* ========== ENHANCED MUSIC PLAYER ========== */
         .music-player {
             position: fixed;
             top: 20px;
@@ -280,6 +297,223 @@
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(20px); }
             to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Playlist Panel */
+        .playlist-panel {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 1999;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border: 2px solid var(--rose-300);
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .playlist-panel.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--rose-200);
+        }
+
+        .playlist-header h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--rose-600);
+            margin: 0;
+        }
+
+        .close-playlist {
+            background: none;
+            border: none;
+            color: var(--rose-600);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-playlist:hover {
+            background-color: var(--rose-100);
+            transform: rotate(90deg);
+        }
+
+        .playlist-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .playlist-item:hover {
+            background: rgba(254, 205, 211, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .playlist-item.active {
+            background: linear-gradient(135deg, rgba(251, 113, 133, 0.2), rgba(244, 63, 94, 0.1));
+            border-left: 3px solid var(--rose-500);
+        }
+
+        .playlist-item-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            color: var(--rose-600);
+            font-weight: 600;
+            min-width: 25px;
+        }
+
+        .playlist-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .playlist-item-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--burgundy);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .playlist-item-playing {
+            color: var(--rose-500);
+            font-size: 0.8rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        .toggle-playlist-btn {
+            background: none;
+            border: none;
+            color: var(--rose-600);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-playlist-btn:hover {
+            background-color: var(--rose-100);
+            transform: scale(1.1);
+        }
+
+        /* ========== COUNTER BLUR STYLES ========== */
+        .counter-item .value {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--rose-500);
+            font-weight: bold;
+            filter: blur(10px);
+            transition: filter 0.5s ease;
+            user-select: none;
+        }
+        
+        .counter-item.revealed .value {
+            filter: blur(0);
+        }
+        
+        .counter-item {
+            background: linear-gradient(145deg, white, var(--rose-50));
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(244, 63, 94, 0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .counter-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rose-400), var(--rose-500));
+        }
+
+        .counter-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(244, 63, 94, 0.2);
+        }
+
+        .counter-item .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .counter-item .label {
+            color: var(--burgundy);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .counter-item .hint-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--rose-600);
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            font-style: italic;
+            text-align: center;
+            width: 100%;
+            padding: 0 1rem;
+        }
+        
+        .counter-item:hover .hint-text {
+            opacity: 0.8;
+        }
+        
+        .counter-item.revealed .hint-text {
+            opacity: 0;
         }
 
         /* Floating Hearts */
@@ -454,45 +688,6 @@
             gap: 2rem;
             max-width: 900px;
             margin: 0 auto;
-        }
-
-        .counter-item {
-            background: linear-gradient(145deg, white, var(--rose-50));
-            padding: 2rem 1.5rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(244, 63, 94, 0.15);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .counter-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--rose-400), var(--rose-500));
-        }
-
-        .counter-item:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 25px 50px rgba(244, 63, 94, 0.2);
-        }
-
-        .counter-item .icon { font-size: 2.5rem; margin-bottom: 1rem; }
-        .counter-item .value {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            color: var(--rose-500);
-            font-weight: bold;
-        }
-        .counter-item .label {
-            color: var(--burgundy);
-            font-size: 1rem;
-            margin-top: 0.5rem;
-            font-weight: 500;
         }
 
         /* Gallery Section */
@@ -699,8 +894,7 @@
             .gate-title { font-size: 2rem; }
             .music-player { top: 10px; right: 10px; }
             .music-controls { padding: 8px 12px; }
-            .music-btn { font-size: 1.2rem; width: 35px; height: 35px; }
-            .volume-slider { width: 60px; }
+            .playlist-panel { width: 280px; right: 10px; }
         }
 
         @media (max-width: 480px) {
@@ -710,6 +904,7 @@
             .couple-names { font-size: 1.8rem; }
             .hero-quote { font-size: 1.1rem; padding: 1rem; }
             .gallery-item { aspect-ratio: 3/4; }
+            .playlist-panel { width: calc(100vw - 40px); right: 20px; }
         }
     </style>
 </head>
@@ -738,13 +933,16 @@
         <!-- Floating Hearts -->
         <div class="floating-hearts" id="floatingHearts"></div>
 
-        <!-- Music Player -->
+        <!-- Enhanced Music Player -->
         <div class="music-player">
             <div class="now-playing" id="nowPlaying">
                 <i class="fas fa-music" style="margin-right: 5px;"></i>
                 <span id="songTitle">Only Love</span>
             </div>
             <div class="music-controls">
+                <button class="toggle-playlist-btn" id="togglePlaylist" title="Danh sách nhạc">
+                    <i class="fas fa-list"></i>
+                </button>
                 <button class="music-btn" id="prevBtn" title="Bài trước">
                     <i class="fas fa-step-backward"></i>
                 </button>
@@ -763,6 +961,19 @@
             </div>
         </div>
 
+        <!-- Playlist Panel -->
+        <div class="playlist-panel" id="playlistPanel">
+            <div class="playlist-header">
+                <h3>🎵 Our Love Playlist</h3>
+                <button class="close-playlist" id="closePlaylist">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="playlist-items" id="playlistItems">
+                <!-- Playlist items will be generated by JavaScript -->
+            </div>
+        </div>
+
         <!-- Audio Element -->
         <audio id="backgroundMusic">
             <source src="onlylove.mp3" type="audio/mpeg">
@@ -770,7 +981,8 @@
 
         <!-- Hero Section -->
         <section class="hero">
-            <div class="date-range">4.12.2025 - 4.1.2026</div>
+            <!-- Thêm blur cho date-range -->
+            <div class="date-range blurred-date">4.12.2025 - 4.1.2026</div>
             <h1>Happy Anniversary</h1>
             <div class="couple-names">
                 <span></span>
@@ -786,32 +998,37 @@
             <div class="scroll-indicator"></div>
         </section>
 
-        <!-- Counter Section -->
+        <!-- Counter Section với blur -->
         <section class="counter">
             <h2>✨ In Love ✨</h2>
             <div class="counter-grid">
-                <div class="counter-item">
+                <div class="counter-item" data-id="days">
                     <div class="icon">📅</div>
                     <div class="value" id="days">0</div>
                     <div class="label">Days</div>
+                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu ngày</div>
                 </div>
-                <div class="counter-item">
+                <div class="counter-item" data-id="hours">
                     <div class="icon">⏰</div>
                     <div class="value" id="hours">0</div>
                     <div class="label">Hours</div>
+                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu giờ</div>
                 </div>
-                <div class="counter-item">
+                <div class="counter-item" data-id="minutes">
                     <div class="icon">⏱️</div>
                     <div class="value" id="minutes">0</div>
                     <div class="label">Minutes</div>
+                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu phút</div>
                 </div>
-                <div class="counter-item">
+                <div class="counter-item" data-id="seconds">
                     <div class="icon">💓</div>
                     <div class="value" id="seconds">0</div>
                     <div class="label">Seconds</div>
+                    <div class="hint-text">Click để xem chúng ta yêu nhau được bao nhiêu giây</div>
                 </div>
             </div>
-            <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;">
+            <!-- Thêm blur cho thông tin ngày bắt đầu -->
+            <p style="margin-top: 2rem; color: var(--rose-600); font-style: italic;" class="blurred-date">
                 Started: x xth, 2025 at 23:00
             </p>
         </section>
@@ -853,7 +1070,9 @@
             { title: "Nothing's Gonna Change My Love For You", src: "Nothing's Gonna Change My Love For You.mp3" },
             { title: "I Lay My Love On You", src: "I Lay My Love On You.mp3" },
             { title: "Từng Ngày Yêu Em", src: "tungngayyeuem.mp3" },
-            { title: "Yêu Em Hơn Mỗi Ngày", src: "yeuemhonmoingay.mp3" }
+            { title: "Yêu Em Hơn Mỗi Ngày", src: "yeuemhonmoingay.mp3" },
+            { title: "Until You", src: "Until You.mp3" },
+           
         ];
 
         // Danh sách ảnh
@@ -907,17 +1126,110 @@ Anh thương em...`;
             }
         });
 
+        // ========== BLURRED DATE FUNCTIONALITY ==========
+        function setupBlurredDates() {
+            const blurredElements = document.querySelectorAll('.blurred-date');
+            blurredElements.forEach(el => {
+                // Click để hiện/ẩn
+                el.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('revealed');
+                });
+                
+                // Double click để hiện thông báo
+                el.addEventListener('dblclick', function(e) {
+                    e.stopPropagation();
+                    alert('💕 Ngày tháng đặc biệt của chúng mình, chỉ mình em biết thôi nhé!');
+                });
+            });
+            
+            // Click ra ngoài để ẩn lại
+            document.addEventListener('click', function() {
+                blurredElements.forEach(el => {
+                    el.classList.remove('revealed');
+                });
+            });
+        }
+
+        // ========== COUNTER REVEAL FUNCTIONALITY ==========
+        function setupCounterReveal() {
+            const counterItems = document.querySelectorAll('.counter-item');
+            let revealedItems = new Set();
+            
+            counterItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    const id = this.getAttribute('data-id');
+                    const valueElement = this.querySelector('.value');
+                    
+                    // Nếu đã reveal rồi thì không làm gì
+                    if (this.classList.contains('revealed')) {
+                        return;
+                    }
+                    
+                    // Thêm class revealed
+                    this.classList.add('revealed');
+                    revealedItems.add(id);
+                    
+                    // Hiệu ứng mờ dần
+                    valueElement.style.transition = 'filter 0.8s ease';
+                    setTimeout(() => {
+                        valueElement.style.filter = 'blur(0)';
+                    }, 10);
+                    
+                    // Hiển thị thông báo cute
+                    const messages = {
+                        'days': '🎉 Wow! Đã yêu nhau được nhiều ngày thế này rồi sao?',
+                        'hours': '⏰ Mỗi giờ bên em đều thật đáng giá!',
+                        'minutes': '💖 Từng phút giây đều là kỷ niệm đẹp!',
+                        'seconds': '💓 Yêu em nhiều hơn mỗi giây trôi qua!'
+                    };
+                    
+                    if (messages[id]) {
+                        setTimeout(() => {
+                            alert(messages[id]);
+                        }, 300);
+                    }
+                    
+                    // Kiểm tra nếu đã reveal hết 4 cột
+                    if (revealedItems.size === 4) {
+                        setTimeout(() => {
+                            alert('💕 Em đã khám phá hết tất cả! Chúng mình đã yêu nhau được ' + 
+                                  document.getElementById('days').textContent + ' ngày ' +
+                                  document.getElementById('hours').textContent + ' giờ ' +
+                                  document.getElementById('minutes').textContent + ' phút ' +
+                                  document.getElementById('seconds').textContent + ' giây rồi đó!');
+                        }, 500);
+                    }
+                });
+                
+                // Double click để reset
+                item.addEventListener('dblclick', function(e) {
+                    e.stopPropagation();
+                    const id = this.getAttribute('data-id');
+                    this.classList.remove('revealed');
+                    revealedItems.delete(id);
+                    const valueElement = this.querySelector('.value');
+                    valueElement.style.filter = 'blur(10px)';
+                });
+            });
+        }
+
         // ========== MAIN CONTENT INIT ==========
         function initMainContent() {
+            setupBlurredDates(); // Khởi tạo hiệu ứng blur cho ngày tháng
+            setupCounterReveal(); // Khởi tạo hiệu ứng reveal cho counter
             createHearts();
             loadGallery();
             typeWriter();
             calculateLoveTime();
             setInterval(calculateLoveTime, 1000);
             initMusicPlayer();
+            renderPlaylist();
         }
 
-        // ========== MUSIC PLAYER ==========
+        // ========== ENHANCED MUSIC PLAYER ==========
         const audio = document.getElementById('backgroundMusic');
         const playBtn = document.getElementById('playBtn');
         const prevBtn = document.getElementById('prevBtn');
@@ -926,6 +1238,10 @@ Anh thương em...`;
         const volumeSlider = document.getElementById('volumeSlider');
         const nowPlaying = document.getElementById('nowPlaying');
         const songTitle = document.getElementById('songTitle');
+        const togglePlaylistBtn = document.getElementById('togglePlaylist');
+        const closePlaylistBtn = document.getElementById('closePlaylist');
+        const playlistPanel = document.getElementById('playlistPanel');
+        const playlistItems = document.getElementById('playlistItems');
 
         let currentSongIndex = 0;
         let isPlaying = false;
@@ -946,6 +1262,7 @@ Anh thương em...`;
             isPlaying = true;
             playBtn.innerHTML = '<i class="fas fa-pause"></i>';
             nowPlaying.classList.add('show');
+            updateActivePlaylistItem();
         }
 
         function pauseMusic() {
@@ -962,12 +1279,105 @@ Anh thương em...`;
             audio.src = playlist[currentSongIndex].src;
             songTitle.textContent = playlist[currentSongIndex].title;
             
-            if (isPlaying) audio.play();
+            if (isPlaying) {
+                audio.play();
+                updateActivePlaylistItem();
+            }
         }
 
-        playBtn.addEventListener('click', () => isPlaying ? pauseMusic() : playMusic());
-        prevBtn.addEventListener('click', () => loadSong(currentSongIndex - 1));
-        nextBtn.addEventListener('click', () => loadSong(currentSongIndex + 1));
+        // Render playlist items
+        function renderPlaylist() {
+            playlistItems.innerHTML = '';
+            playlist.forEach((song, index) => {
+                const item = document.createElement('div');
+                item.className = `playlist-item ${index === currentSongIndex ? 'active' : ''}`;
+                item.dataset.index = index;
+                
+                item.innerHTML = `
+                    <div class="playlist-item-number">${index + 1}</div>
+                    <div class="playlist-item-info">
+                        <div class="playlist-item-title">${song.title}</div>
+                        ${index === currentSongIndex && isPlaying ? 
+                            '<div class="playlist-item-playing">🎵 Đang phát</div>' : 
+                            ''}
+                    </div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    loadSong(index);
+                    if (!isPlaying) {
+                        playMusic();
+                    }
+                    updateActivePlaylistItem();
+                });
+                
+                playlistItems.appendChild(item);
+            });
+        }
+
+        // Update active playlist item
+        function updateActivePlaylistItem() {
+            const items = document.querySelectorAll('.playlist-item');
+            items.forEach((item, index) => {
+                if (index === currentSongIndex) {
+                    item.classList.add('active');
+                    const playingIndicator = item.querySelector('.playlist-item-playing');
+                    if (playingIndicator) {
+                        playingIndicator.textContent = isPlaying ? '🎵 Đang phát' : '⏸️ Đã tạm dừng';
+                    } else if (isPlaying) {
+                        const infoDiv = item.querySelector('.playlist-item-info');
+                        const playingDiv = document.createElement('div');
+                        playingDiv.className = 'playlist-item-playing';
+                        playingDiv.textContent = '🎵 Đang phát';
+                        infoDiv.appendChild(playingDiv);
+                    }
+                } else {
+                    item.classList.remove('active');
+                    const playingIndicator = item.querySelector('.playlist-item-playing');
+                    if (playingIndicator) {
+                        playingIndicator.remove();
+                    }
+                }
+            });
+        }
+
+        // Playlist panel toggle
+        togglePlaylistBtn.addEventListener('click', () => {
+            playlistPanel.classList.toggle('show');
+        });
+
+        closePlaylistBtn.addEventListener('click', () => {
+            playlistPanel.classList.remove('show');
+        });
+
+        // Close playlist when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!playlistPanel.contains(e.target) && 
+                !togglePlaylistBtn.contains(e.target) && 
+                !e.target.closest('.playlist-item')) {
+                playlistPanel.classList.remove('show');
+            }
+        });
+
+        // Music controls
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseMusic();
+            } else {
+                playMusic();
+            }
+            updateActivePlaylistItem();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            loadSong(currentSongIndex - 1);
+            updateActivePlaylistItem();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            loadSong(currentSongIndex + 1);
+            updateActivePlaylistItem();
+        });
 
         volumeSlider.addEventListener('input', () => {
             const volume = volumeSlider.value / 100;
@@ -998,7 +1408,14 @@ Anh thương em...`;
             }
         });
 
-        audio.addEventListener('ended', () => loadSong(currentSongIndex + 1));
+        audio.addEventListener('ended', () => {
+            loadSong(currentSongIndex + 1);
+            updateActivePlaylistItem();
+        });
+
+        // Update playlist when song changes
+        audio.addEventListener('play', updateActivePlaylistItem);
+        audio.addEventListener('pause', updateActivePlaylistItem);
 
         // ========== FLOATING HEARTS ==========
         function createHearts() {
@@ -1065,10 +1482,7 @@ Anh thương em...`;
             const diff = now - loveStartDate;
             
             if (diff < 0) {
-                document.getElementById('days').textContent = '0';
-                document.getElementById('hours').textContent = '0';
-                document.getElementById('minutes').textContent = '0';
-                document.getElementById('seconds').textContent = '0';
+                updateCounterValues('0', '0', '0', '0');
                 return;
             }
             
@@ -1077,6 +1491,11 @@ Anh thương em...`;
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
+            updateCounterValues(days, hours, minutes, seconds);
+        }
+        
+        function updateCounterValues(days, hours, minutes, seconds) {
+            // Chỉ cập nhật giá trị, không thay đổi hiệu ứng blur
             document.getElementById('days').textContent = days;
             document.getElementById('hours').textContent = hours;
             document.getElementById('minutes').textContent = minutes;
@@ -1085,22 +1504,3 @@ Anh thương em...`;
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
